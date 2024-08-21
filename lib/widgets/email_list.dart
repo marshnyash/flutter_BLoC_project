@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/email_bloc.dart';
-import '../bloc/email_events.dart';
-import '../bloc/email_state.dart';
+import 'package:my_flutter_bloc/cubit/email_cubit.dart';
 
 class EmailList extends StatelessWidget {
   const EmailList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EmailBloc, EmailState>(
+    return BlocBuilder<EmailCubit, EmailState>(
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,7 +21,7 @@ class EmailList extends StatelessWidget {
                   .map((email) => Chip(
                         label: Text(email),
                         onDeleted: () =>
-                            context.read<EmailBloc>().add(RemoveEmail(email)),
+                            context.read<EmailCubit>().removeEmail(email),
                       ))
                   .toList(),
             ),

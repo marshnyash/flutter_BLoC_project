@@ -15,10 +15,10 @@ class EmailBloc extends Bloc<EmailEvent, EmailState> {
     final emails = List<String>.from(state.emails);
 
     if (emails.contains(event.email)) {
-      emit(state.updateState(errorMessage: 'Duplicate email found'));
+      emit(state.copyWith(errorMessage: 'Duplicate email found'));
     } else {
       emails.add(event.email);
-      emit(state.updateState(
+      emit(state.copyWith(
         emails: emails,
         errorMessage: '',
         isButtonEnabled: false,
@@ -28,20 +28,20 @@ class EmailBloc extends Bloc<EmailEvent, EmailState> {
 
   void _onRemoveEmail(RemoveEmail event, Emitter<EmailState> emit) {
     final emails = List<String>.from(state.emails)..remove(event.email);
-    emit(state.updateState(
+    emit(state.copyWith(
       emails: emails,
       errorMessage: emails.isEmpty ? 'At least 1 email should be added' : '',
     ));
   }
 
   void _onClearEmails(ClearEmails event, Emitter<EmailState> emit) {
-    emit(state.updateState(
+    emit(state.copyWith(
         emails: [], errorMessage: 'At least 1 email should be added'));
   }
 
   void _onValidateEmail(ValidateEmail event, Emitter<EmailState> emit) {
     final isValid = _validateEmail(event.email);
-    emit(state.updateState(
+    emit(state.copyWith(
         // errorMessage: event.email.isNotEmpty && !isValid ? 'Invalid email address' : '',
         isButtonEnabled: isValid));
   }

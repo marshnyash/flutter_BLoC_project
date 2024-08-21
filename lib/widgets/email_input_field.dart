@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/email_bloc.dart';
-import '../bloc/email_events.dart';
-import '../bloc/email_state.dart';
+import 'package:my_flutter_bloc/cubit/email_cubit.dart';
 
 class EmailInputField extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -12,7 +9,7 @@ class EmailInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EmailBloc, EmailState>(
+    return BlocBuilder<EmailCubit, EmailState>(
       builder: (context, state) {
         return Row(
           children: [
@@ -23,15 +20,14 @@ class EmailInputField extends StatelessWidget {
                   hintText: 'Enter email',
                   border: OutlineInputBorder(),
                 ),
-                onChanged: (value) =>
-                    context.read<EmailBloc>().add(ValidateEmail(value)),
+                onChanged: (email) => context.read<EmailCubit>().emailChanged(email),
               ),
             ),
             const SizedBox(width: 8),
             ElevatedButton(
               onPressed: state.isButtonEnabled
                   ? () {
-                      context.read<EmailBloc>().add(AddEmail(_controller.text));
+                      context.read<EmailCubit>().addEmail(_controller.text);
                       _controller.clear();
                     }
                   : null,

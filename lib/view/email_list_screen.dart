@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_flutter_bloc/cubit/email_cubit.dart';
 
-import '../bloc/email_bloc.dart';
 import '../widgets/clear_all_emails_button.dart';
 import '../widgets/email_error_message.dart';
 import '../widgets/email_input_field.dart';
@@ -13,7 +13,7 @@ class EmailListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EmailBloc(),
+      create: (context) => EmailCubit(),
       child: Scaffold(
         appBar: AppBar(title: const Text('Email List Manager')),
         body: Padding(
