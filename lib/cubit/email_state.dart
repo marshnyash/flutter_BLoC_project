@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'email_cubit.dart';
 
 class EmailState extends Equatable {
   final List<String> emails;
